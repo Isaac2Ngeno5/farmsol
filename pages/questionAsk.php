@@ -46,7 +46,7 @@ if (!isset($_SESSION['user'])){
         </div>
         <ul class="nav navbar-nav">
             <li ><a href="index.php">Home</a></li>
-            <li class="active"><a href="#">Ask Question</a></li>
+            <li ><a href="questionAsk.php">Ask Question</a></li>
             <li><a href="users.php">Users</a></li>
             <li><a href="statistics.php">Statistics</a></li>
         </ul>

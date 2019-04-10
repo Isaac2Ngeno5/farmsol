@@ -52,8 +52,16 @@ $details = $statement->fetch();
             <a class="navbar-brand" href="#">FarmSol</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="index.php">Home</a></li>
-            <li class="active"><a href="#">Ask Question</a></li>
+            <li>
+                <?php
+                if ($post == true){
+                    echo "<a href=\"index.php\">Home</a>";
+                }else{
+                    echo "<a href=\"../index.php\">Home</a>";
+                }
+                ?>
+            </li>
+            <li ><a href="questionAsk.php">Ask Question</a></li>
             <li><a href="users.php">Users</a></li>
             <li><a href="statistics.php">Statistics</a></li>
         </ul>
@@ -116,7 +124,7 @@ $details = $statement->fetch();
                     }
                 }
                 ?>
-                <input type="text" name="answer" class="form-control" placeholder="Write answer here..">
+                <textarea name="answer" id="" class="form-control" cols="30" rows="2" placeholder="Write answer here.."></textarea>
                 <?php
                 if ($post == true) {
                     echo "<button type=\"submit\" name='send' class=\"btn btn-primary\">Submit</button>";
@@ -161,20 +169,28 @@ $details = $statement->fetch();
                 $stm->execute(array($answer['userId']));
                 $answerer = $stm->fetch();
 
+                $statement = $pdo->prepare("SELECT * FROM `answer_votes` WHERE `answerId`=? AND `upvotes`=?");
+                $statement->execute(array($details['id'], "1"));
+                $upvotes = $statement->rowCount();
+
+                $statement = $pdo->prepare("SELECT * FROM `answer_votes` WHERE `answerId`=? AND `downvotes`=?");
+                $statement->execute(array($details['id'], "1"));
+                $downvotes = $statement->rowCount();
+
                 if ($answerer['type'] == "1") {
                     echo "<div class=\"answer ext\">";
                 } else {
                     echo "<div class=\"answer\">";
                 }
-
+//TODO : fix the answer vote problem
                 echo "<h5 class='text-capitalize'><i class=\"material-icons\">account_circle</i> {$answerer['firstName']} {$answerer['lastName']}</h5>
             <div class=\"answer_body\">
                 <p>{$answer['answer']}</p>
             </div>
             <div class=\"answer_footer post_footer\">
                 <ul>
-                    <li> {$answer['upvotes']} Upvotes</li>
-                    <li> {$answer['downvotes']} Downvotes</li>
+                    <li><a href='vote.php?upvote_id={$answer['id']}'><span class='glyphicon glyphicon-thumbs-up'></span> {$upvotes} Upvotes</a> </li>
+                    <a><a href='vote.php?downvote_id={$answer['id']}'><span class='glyphicon glyphicon-thumbs-down'></span> {$downvotes} Downvotes</a></li>
                 </ul>
             </div>
             </div>

@@ -178,6 +178,9 @@ session_start();
                 <button type="submit" name="submit" class="btn btn-success form-control">Sign Up</button>
             </div>
         </form>
+        <div>
+            <p>Already have an account <a href="login.php">Sign In</a></p>
+        </div>
     </div>
 
 </div>

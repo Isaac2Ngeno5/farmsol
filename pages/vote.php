@@ -65,3 +65,45 @@ if (isset($_GET['downvoteId'])){
     }
 
 }
+
+if (isset($_GET['upvote_id'])){
+    $answerId =  $_GET['upvote_id'];
+    $statement = $pdo->prepare("SELECT * FROM `answer_votes` WHERE `userId`=? AND `answerId`=?");
+    $statement->execute(array($voterId, $answerId));
+    $num_rows = $statement->rowCount();
+
+    if ($num_rows == 0){
+        $stm = $pdo->prepare("INSERT INTO `answer_votes`( `answerId`, `userId`, `upvotes`) VALUES (?, ?, ?)");
+        if ($stm->execute(array($_GET['upvote_id'], $voterId, "1"))){
+            header("Location: index.php");
+        }
+
+    }else{
+        $stm = $pdo->prepare("UPDATE `answer_votes` SET `upvotes`=?,`downvotes`=? WHERE `answerId`=? AND `userId`=?");
+        if($stm->execute(array("1", "0", $_GET['upvote_id'], $voterId))){
+            header("Location: index.php");
+        }
+    }
+
+}
+
+if (isset($_GET['downvote_id'])){
+    $answerId =  $_GET['downvote_id'];
+    $statement = $pdo->prepare("SELECT * FROM `answer_votes` WHERE `userId`=? AND `answerId`=?");
+    $statement->execute(array($voterId, $answerId));
+    $num_rows = $statement->rowCount();
+
+    if ($num_rows == 0){
+        $stm = $pdo->prepare("INSERT INTO `answer_votes`( `answerId`, `userId`, `upvotes`, `downvotes`) VALUES (?, ?, ?, ?)");
+        if ($stm->execute(array($_GET['upvote_id'], $voterId, "0", "1"))){
+            header("Location: index.php");
+        }
+
+    }else{
+        $stm = $pdo->prepare("UPDATE `answer_votes` SET `upvotes`=?,`downvotes`=? WHERE `answerId`=? AND `userId`=?");
+        if($stm->execute(array("0", "1", $_GET['downvote_id'], $voterId))){
+            header("Location: index.php");
+        }
+    }
+
+}

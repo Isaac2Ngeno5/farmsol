@@ -61,11 +61,32 @@ $user = $statement->fetch();
             <input type="text" name="search" class="form-control" placeholder="Search ">
             <button type="submit" name="submit" class="btn btn-primary">Search</button>
         </form>
+
+        <form action="" class="form-inline" method="post">
+            <label for="cat">Select category</label>
+            <select name="cat" class="form-control" id="cat">
+                <option value="management">Management</option>
+                <option value="machinery">Machinery</option>
+                <option value="crop">Crop Production</option>
+                <option value="livestock">Livestock production</option>
+            </select>
+            <button type="submit" name="filter" class="btn btn-success">Filter</button>
+        </form>
     </div>
 
     <?php
-    $stm = $pdo->prepare("SELECT * FROM `questions`");
-    $stm->execute();
+    if (isset($_POST['submit']) && isset($_POST['search'])){
+        $search_term = "%" . $_POST['search'] . "%";
+        $stm = $pdo->prepare("SELECT * FROM `questions` WHERE (`category` LIKE ? OR `question` LIKE ? OR `description` LIKE ?)");
+        $stm->execute(array($search_term, $search_term, $search_term));
+    }else if (isset($_POST['cat']) && isset($_POST['filter'])){
+        $stm = $pdo->prepare("SELECT * FROM `questions` WHERE `category` = ?");
+        $stm->execute(array($_POST['cat']));
+    }else{
+        $stm = $pdo->prepare("SELECT * FROM `questions` ");
+        $stm->execute();
+    }
+
     if ($stm->rowCount() < 0) {
         echo "<div class='alert alert-primary'>No Questions asked Yet!</div>";
     } else {

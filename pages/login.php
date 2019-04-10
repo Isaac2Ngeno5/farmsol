@@ -73,9 +73,14 @@ session_start();
                 <label><input type="checkbox" value="remember">Remember me</label>
             </div>
             <div class="form-group">
-                <button type="submit" name="submit" class="btn btn-success form-control">Sign Up</button>
+                <button type="submit" name="submit" class="btn btn-success form-control">Sign In</button>
             </div>
         </form>
+
+        <div>
+            <p><a href="reset.php">Forgot password</a></p>
+            <p>Don't have an account <a href="signUp.php">Sign Up</a></p>
+        </div>
     </div>
 
 </div>

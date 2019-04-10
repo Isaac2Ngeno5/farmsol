@@ -50,8 +50,8 @@ if ($statement->execute()) {
         </div>
         <ul class="nav navbar-nav">
             <li><a href="index.php">Home</a></li>
-            <li class="active"><a href="#">Ask Question</a></li>
-            <li><a href="users.php">Users</a></li>
+            <li ><a href="questionAsk.php">Ask Question</a></li>
+            <li class="active"><a href="#">Users</a></li>
             <li><a href="statistics.php">Statistics</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -93,12 +93,13 @@ if ($statement->execute()) {
                 ?>
             </div>
         </form>
+        <div class=""></div>
     </div>
 
     <div class="table-responsive" style="margin: 10px auto">
         <table class="table table-striped table-hover table-bordered">
             <thead>
-            <tr class="bg-primary">
+            <tr class="bg-success">
                 <th>No.</th>
                 <th>Name</th>
                 <th>Email</th>
@@ -161,6 +162,7 @@ if ($statement->execute()) {
             </tbody>
         </table>
     </div>
+
 </div>
 
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>

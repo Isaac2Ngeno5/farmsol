@@ -4,7 +4,7 @@ body {
 }
 
 .login{
-    width: 40%;
+    width: 100%;
     margin: 40px auto;
     padding: 40px;
     background-color: #ffffff;
@@ -13,7 +13,7 @@ body {
 }
 
 .post{
-    width: 80%;
+    width: 100%;
     margin: 5px auto;
     padding: 20px;
     background-color: #ffffff;
@@ -115,5 +115,12 @@ body {
     .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover,
     .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
         color: #333;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .login {
+        width: 80% ;
     }
 }
